@@ -1,5 +1,5 @@
 {
-  "name": "aniwatch-api",
+  "name": "v-anime-api",
   "version": "2.1.0",
   "description": "Node.js API for obtaining anime information from hianime.to",
   "main": "src/server.ts",
@@ -17,24 +17,24 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ghoshRitesh12/aniwatch-api.git"
+    "url": "git+https://github.com/ghoshRitesh12/v-anime-api.git"
   },
   "bugs": {
-    "url": "https://github.com/ghoshRitesh12/aniwatch-api/issues"
+    "url": "https://github.com/ghoshRitesh12/v-anime-api/issues"
   },
-  "homepage": "https://github.com/ghoshRitesh12/aniwatch-api#readme",
+  "homepage": "https://github.com/ghoshRitesh12/v-anime-api#readme",
   "keywords": [
     "anime",
     "weeb",
     "hianime",
-    "aniwatch",
+    "v-anime",
     "scraper"
   ],
   "author": "https://github.com/ghoshRitesh12",
   "license": "MIT",
   "dependencies": {
     "@hono/node-server": "^1.13.1",
-    "aniwatch": "^2.4.1",
+    "v-anime": "^2.4.1",
     "dotenv": "^16.4.5",
     "hono": "^4.6.3",
     "hono-rate-limiter": "^0.4.0"

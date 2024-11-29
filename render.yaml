@@ -1,8 +1,8 @@
 services:
   - type: web
-    name: aniwatch-api
+    name: v-anime-api
     runtime: docker
-    repo: https://github.com/ghoshRitesh12/aniwatch-api.git
+    repo: https://github.com/ghoshRitesh12/v-anime-api.git
     plan: free
     branch: main
     envVars:

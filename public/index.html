@@ -1,277 +1,265 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8">
-  <title>Aniwatch API</title>
-  <meta name="content-language" content="en">
-  <!-- <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self' https://api-aniwatch.onrender.com; style-src 'unsafe-inline'; img-src 'self' https://raw.githubusercontent.com https://img.shields.io https://contrib.rocks"> -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="title" content="Aniwatch API">
-  <meta name="theme-color" content="#d5b3ff">
-  <meta name="color-scheme" content="dark">
-  <link rel="canonical" href="https://api-aniwatch.onrender.com">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta property="og:image"
-    content="https://raw.githubusercontent.com/ghoshRitesh12/aniwatch-api/refs/heads/main/public/img/hianime_v2.png">
-  <meta property="og:url" content="https://api-aniwatch.onrender.com">
-  <meta property="og:image:width" content="500">
-  <meta property="og:image:height" content="500">
-  <meta property="og:site_name" content="aniwatch">
-  <meta property="og:type" content="website">
-  <meta name="twitter:card" content="summary_image">
-  <meta name="twitter:site" content="@aniwatch-api">
-  <meta name="twitter:title" content="Aniwatch API">
-  <meta name="twitter:description" content="Node.js API for obtaining anime information from hianime.to">
-  <meta name="twitter:image:src"
-    content="https://raw.githubusercontent.com/ghoshRitesh12/aniwatch-api/refs/heads/main/public/img/hianime_v2.png">
-  <meta name="keywords" content="hianime api scraper anime aniwatch node express typescript">
-  <meta property="og:title" content="Aniwatch API">
-  <meta name="description" content="Node.js API for obtaining anime information from hianime.to">
-  <meta property="og:description" content="Node.js API for obtaining anime information from hianime.to">
-  <link rel="shortcut icon"
-    href="https://raw.githubusercontent.com/ghoshRitesh12/aniwatch-api/refs/heads/main/public/img/hianime_v2.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ViAnime API - Your Gateway to Anime Data</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
 
-  <style>
-    * {
-      --accent: #d5b3ff;
-      box-sizing: border-box;
-      font-family: sans-serif;
-      transition:
-        0.15s ease scale,
-        0.15s ease width,
-        0.15s ease height,
-        0.15s ease gap;
-    }
+        :root {
+            --primary-color: #6a11cb;
+            --secondary-color: #2575fc;
+            --bg-color: #0a0a0a;
+            --text-color: #ffffff;
+        }
 
-    html {
-      color-scheme: dark;
-      height: 100%;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-      display: flex;
-      flex-direction: column;
-      font-family: sans-serif;
-      background-color: #151518;
-      padding: 0rem 1rem 0 1rem;
-      min-height: 98vh;
-    }
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            overflow-x: hidden;
+        }
 
-    section {
-      margin-block: auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: start;
-      position: relative;
-      isolation: isolate;
-    }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-    section::before {
-      content: "";
-      width: 100%;
-      height: 100%;
+        header {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
 
-      position: absolute;
-      inset: -2rem 0 0 0;
-      isolation: isolate;
-      z-index: -1;
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
 
-      background-color: #7300ff;
-      opacity: .35;
-      border-radius: 50%;
-      filter: blur(12rem);
-    }
+        .header-content {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
 
-    @media (min-width: 640px) {
-      section::before {
-        background-color: #7300ffbb;
-        opacity: .3;
-      }
-    }
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-    .overlay {
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      overflow: hidden;
+        .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease-out 0.5s forwards;
+        }
 
-      width: 100%;
-      min-height: 100%;
-      isolation: isolate;
-      z-index: -1;
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--text-color);
+            padding: 12px 24px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease-out 1s forwards;
+        }
 
-    }
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+        }
 
-    .overlay .child {
-      background-position: center center;
-      background-size: cover;
-      position: absolute;
-      inset: 0;
+        .features {
+            padding: 80px 0;
+        }
 
-      opacity: .4;
-      filter: blur(5rem);
-      background-image: url(https://raw.githubusercontent.com/ghoshRitesh12/aniwatch-api/refs/heads/main/public/img/wano_kuni.png);
-    }
+        .features h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-    @media (min-width: 640px) {
-      .overlay .child {
-        opacity: .35;
-        filter: blur(8rem);
-      }
-    }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
 
-    .overlay::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 2;
+        .feature-item {
+            text-align: center;
+            padding: 30px;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
 
-      background: url("https://hianime.to/images/live-thumb.png") repeat;
-    }
+        .feature-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(255, 255, 255, 0.1);
+        }
 
-    h2 {
-      color: var(--accent);
-      margin-top: 0;
-      font-size: 1.65rem;
-      font-weight: 600;
-      text-align: center;
-      text-wrap: balance;
-    }
+        .feature-icon {
+            font-size: 3rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
 
-    a {
-      line-height: 1.3;
-      text-wrap: balance;
-      color: var(--accent);
-    }
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
 
-    img {
-      object-fit: cover;
-      max-width: 100%;
-      font-size: .9rem;
-    }
+        footer {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-color);
+            text-align: center;
+            padding: 20px 0;
+        }
 
-    #anime_girl {
-      width: 100%;
-      max-width: 10rem;
-    }
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px var(--primary-color), 0 0 20px var(--primary-color);
+            }
+            to {
+                text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px var(--primary-color), 0 0 40px var(--primary-color);
+            }
+        }
 
-    @media (min-width: 640px) {
-      #anime_girl {
-        max-width: 12rem;
-      }
-    }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-    .img-wrapper {
-      aspect-ratio: 1/1;
-      max-width: 12rem;
-      border-radius: 1rem;
-      overflow: hidden;
-      width: fit-content;
-      margin: 1rem auto 1.5rem auto;
-    }
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
 
-    .api-stats-container {
-      display: flex;
-      gap: .2rem .5rem;
-      align-items: center;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 1rem;
-    }
+            .tagline {
+                font-size: 1.2rem;
+            }
 
-    .api-stats-container a {
-      flex-shrink: 0;
-      user-select: none;
-    }
-
-    .contributors {
-      margin-top: 1rem;
-      text-align: center;
-    }
-  </style>
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
-
-<!--
-IMPORTANT:
-1. The hosted version of this API is only meant to demo the API and would have rate-limiting enabled to minimise bandwidth
-consumption. It is recommended to deploy your own instance for personal use by customizing the API as you need it to be.
-2. This API is just an unofficial API for hianime.to and is in no other way officially related to the same.
-3. The content that this API provides is not mine, nor is it hosted by me. These belong to their respective owners. This
-API just demonstrates how to build an API that scrapes websites and uses their content. 
--->
-
 <body>
-  <span class="overlay">
-    <span class="child"></span>
-  </span>
+    <header>
+        <div id="particles-js"></div>
+        <div class="header-content">
+            <h1>ViAnime API</h1>
+            <p class="tagline">Your Gateway to Comprehensive Anime Data</p>
+            <a href="#" class="cta-button">Get Started</a>
+        </div>
+    </header>
 
-  <section>
-    <h2>
-      Welcome to the unofficial
-      <a href="https://hianime.to/home" style="text-underline-offset: 3px;">hianime.to</a>
-      API
-      <span style="-webkit-text-fill-color: var(--accent)">⚔️</span>
-    </h2>
+    <section class="features">
+        <div class="container">
+            <h2>Features</h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <i class="fas fa-search feature-icon"></i>
+                    <h3 class="feature-title">Extensive Database</h3>
+                    <p>Access a vast collection of anime titles, characters, and more.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-bolt feature-icon"></i>
+                    <h3 class="feature-title">Fast & Reliable</h3>
+                    <p>Lightning-fast response times and high uptime guarantee.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-code feature-icon"></i>
+                    <h3 class="feature-title">Easy Integration</h3>
+                    <p>Simple to use with clear documentation for quick implementation.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-lock feature-icon"></i>
+                    <h3 class="feature-title">Secure</h3>
+                    <p>Industry-standard security measures to protect your data.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <div class="api-stats-container">
-      <a href="https://github.com/ghoshRitesh12/aniwatch-api/stargazers">
-        <img src="https://img.shields.io/github/stars/ghoshRitesh12/aniwatch-api?style=social" alt="Stars"
-          decoding="async">
-      </a>
-      <a href="https://github.com/ghoshRitesh12/aniwatch-api/network/members">
-        <img src="https://img.shields.io/github/forks/ghoshRitesh12/aniwatch-api?style=social" alt="Forks"
-          decoding="async">
-      </a>
-      <a href="https://github.com/ghoshRitesh12/aniwatch-api/issues?q=is%3Aissue+is%3Aopen+">
-        <img src="https://img.shields.io/github/issues/ghoshRitesh12/aniwatch-api?style=social&logo=github" alt="Issues"
-          decoding="async">
-      </a>
-      <a href="https://github.com/ghoshRitesh12/aniwatch-api/releases/latest">
-        <img
-          src="https://img.shields.io/github/v/release/ghoshRitesh12/aniwatch-api?display_name=release&style=social&logo=github"
-          alt="Version" decoding="async">
-      </a>
-    </div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 ViAnime API. All rights reserved.</p>
+        </div>
+    </footer>
 
-    <div style="text-align: center;">
-      <div class="img-wrapper">
-        <img draggable="false" id="anime_girl"
-          src="https://raw.githubusercontent.com/ghoshRitesh12/aniwatch-api/refs/heads/main/public/img/hianime_v2.png"
-          alt="kawai_anime_girl" decoding="async" fetchpriority="high" style="user-select: none;" />
-      </div>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const features = document.querySelectorAll('.feature-item');
 
-      <div style="display: flex; align-items: center; gap: .5rem; text-underline-offset: 3px;">
-        <a href="https://github.com/ghoshRitesh12/aniwatch-api/releases/latest" rel="noopener noreferer">
-          Checkout latest changelogs
-        </a>
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.5 });
 
-        <span style="font-size: .9rem;">•</span>
+            features.forEach(feature => {
+                observer.observe(feature);
+            });
 
-        <a href="https://github.com/ghoshRitesh12/aniwatch-api#documentation" rel="noopener noreferer">
-          Visit docs for more information
-        </a>
-      </div>
-    </div>
-
-    <div class="contributors">
-      <p style="text-wrap: balance; line-height: 1.2;">Thanks to the following people for keeping this
-        project alive and
-        relevant.</p>
-
-      <a href="https://github.com/ghoshRitesh12/aniwatch-api/graphs/contributors"
-        style="display: block; margin-bottom: 1rem; user-select: none;">
-        <img src="https://contrib.rocks/image?repo=ghoshRitesh12/aniwatch-api" alt="Contributors" decoding="async">
-      </a>
-    </div>
-  </section>
+            particlesJS('particles-js', {
+                particles: {
+                    number: { value: 80, density: { enable: true, value_area: 800 } },
+                    color: { value: "#ffffff" },
+                    shape: { type: "circle", stroke: { width: 0, color: "#000000" }, polygon: { nb_sides: 5 } },
+                    opacity: { value: 0.5, random: false, anim: { enable: false, speed: 1, opacity_min: 0.1, sync: false } },
+                    size: { value: 3, random: true, anim: { enable: false, speed: 40, size_min: 0.1, sync: false } },
+                    line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.4, width: 1 },
+                    move: { enable: true, speed: 6, direction: "none", random: false, straight: false, out_mode: "out", bounce: false, attract: { enable: false, rotateX: 600, rotateY: 1200 } }
+                },
+                interactivity: {
+                    detect_on: "canvas",
+                    events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" }, resize: true },
+                    modes: { grab: { distance: 400, line_linked: { opacity: 1 } }, bubble: { distance: 400, size: 40, duration: 2, opacity: 8, speed: 3 }, repulse: { distance: 200, duration: 0.4 }, push: { particles_nb: 4 }, remove: { particles_nb: 2 } }
+                },
+                retina_detect: true
+            });
+        });
+    </script>
 </body>
-
 </html>

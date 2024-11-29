@@ -1,5 +1,5 @@
-# START aniwatch-api
+# START v-anime-api
 Disallow:
 
 User-agent: *
-# END aniwatch-api
+# END v-anime-api
