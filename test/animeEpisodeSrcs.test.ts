@@ -1,7 +1,7 @@
 import { expect, test } from "vitest";
 import { HiAnime } from "aniwatch";
 
-const animeEpisodeId = "steinsgate-3?ep=230";
+const animeEpisodeId = "the-elusive-samurai-19233?ep=126490";
 const server = "hd-1";
 const category = "sub";
 

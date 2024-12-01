@@ -5,7 +5,7 @@ config();
 
 const allowedOrigins = process.env.ANIWATCH_API_CORS_ALLOWED_ORIGINS
   ? process.env.ANIWATCH_API_CORS_ALLOWED_ORIGINS.split(",")
-  : ["http://localhost:4000", "*", "http://localhost:4500", "https://vianime.vercel.app"];
+  : ["http://localhost:4000", "*", "http://localhost:4500", "https://vianime.vercel.app", "https://v-anime.vercel.app"];
 
 const corsConfig = cors({
   allowMethods: ["GET"],
