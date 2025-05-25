@@ -73,9 +73,15 @@ hianimeRouter.get("/search/suggestion", async (c) => {
   return c.json({ success: true, data }, { status: 200 });
 });
 
+// https://hianimez.to/watch/wind-breaker-season-2-19542?ep=136272&ep=136272&ep=136272
+
+
+// http://localhost:4000/api/v2/anime/wind-breaker-season-2-19542
+
 // /api/v2/hianime/anime/{animeId}
 hianimeRouter.get("/anime/:animeId", async (c) => {
   const animeId = decodeURIComponent(c.req.param("animeId").trim());
+  console.log(animeId);
   const data = await hianime.getInfo(animeId);
 
   return c.json({ success: true, data }, { status: 200 });
@@ -86,6 +92,8 @@ hianimeRouter.get("/episode/servers", async (c) => {
   const animeEpisodeId = decodeURIComponent(
     c.req.query("animeEpisodeId") || ""
   );
+
+  console.log(animeEpisodeId);
 
   const data = await hianime.getEpisodeServers(animeEpisodeId);
   return c.json({ success: true, data }, { status: 200 });
