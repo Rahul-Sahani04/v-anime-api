@@ -5,6 +5,7 @@ import corsConfig from "./config/cors.js";
 import { ratelimit } from "./config/ratelimit.js";
 
 import { hianimeRouter } from "./routes/hianime.js";
+import { m3u8_router } from "./routes/m3u8-route.js";
 
 import { serveStatic } from "@hono/node-server/serve-static";
 import { serve } from "@hono/node-server";
@@ -34,6 +35,8 @@ if (ISNT_PERSONAL_DEPLOYMENT) {
 
 app.use("/", serveStatic({ root: "public" }));
 app.get("/health", (c) => c.text("OK", { status: 200 }));
+
+app.route("/m3u8-proxy", m3u8_router);
 
 app.basePath(BASE_PATH).route("/hianime", hianimeRouter);
 app
