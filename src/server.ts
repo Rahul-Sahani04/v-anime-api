@@ -7,6 +7,12 @@ import { ratelimit } from "./config/ratelimit.js";
 import { hianimeRouter } from "./routes/hianime.js";
 import { m3u8_router } from "./routes/m3u8-route.js";
 
+import { authRouter } from "./routes/auth.js";
+import { userRouter } from "./routes/user.js";
+import { partyRouter } from "./routes/party.js";
+import { initSchema } from "./db.js";
+import { initSocket } from "./socket.js";
+
 import { serveStatic } from "@hono/node-server/serve-static";
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
@@ -19,6 +25,9 @@ config();
 const BASE_PATH = "/api/v2" as const;
 const PORT: number = Number(process.env.ANIWATCH_API_PORT) || 4000;
 const ANIWATCH_API_HOSTNAME = process.env?.ANIWATCH_API_HOSTNAME;
+
+// Initialize DB Schema (Fire and forget, or await if feasible)
+initSchema();
 
 const app = new Hono();
 
@@ -39,6 +48,10 @@ app.get("/health", (c) => c.text("OK", { status: 200 }));
 app.route("/m3u8-proxy", m3u8_router);
 
 app.basePath(BASE_PATH).route("/hianime", hianimeRouter);
+app.basePath(BASE_PATH).route("/auth", authRouter);
+app.basePath(BASE_PATH).route("/user", userRouter);
+app.basePath(BASE_PATH).route("/party", partyRouter);
+
 app
   .basePath(BASE_PATH)
   .get("/anicrush", (c) => c.text("Anicrush could be implemented in future."));
@@ -61,10 +74,15 @@ app.onError((err, c) => {
 
 // NOTE: this env is "required" for vercel deployments
 if (!Boolean(process?.env?.ANIWATCH_API_VERCEL_DEPLOYMENT)) {
-  serve({
+  const httpServer = serve({
     port: PORT,
     fetch: app.fetch,
-  }).addListener("listening", () =>
+  });
+  
+  // Initialize Socket.io
+  initSocket(httpServer as any);
+
+  httpServer.addListener("listening", () =>
     console.info(
       "\x1b[1;36m" + `aniwatch-api at http://localhost:${PORT}` + "\x1b[0m"
     )
