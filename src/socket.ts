@@ -10,13 +10,28 @@ export function initSocket(httpServer: HttpServer) {
     },
   });
 
+  // In-memory participant list (simple for MVP single instance)
+  // Map<socketId, { roomId, user }>
+  const connectedUsers = new Map();
+  // Map<roomId, List<user>> could be better, but let's just use connectedUsers and filter or maintain a separate structure.
+  // Let's use: Map<roomId, Set<socketId>> to quickly find room members?
+  // Actually, Socket.io manages rooms. We just need to map socketId -> UserInfo to send updates.
+
   io.on("connection", (socket) => {
     console.log(`Socket connected: ${socket.id}`);
 
     // Join a Watch Party Room
-    socket.on("join_room", (roomId: string) => {
+    socket.on("join_room", (data: { roomId: string, user: any }) => {
+      const { roomId, user } = data;
       socket.join(roomId);
-      console.log(`Socket ${socket.id} joined room ${roomId}`);
+      
+      // Store user info
+      connectedUsers.set(socket.id, { roomId, user });
+
+      console.log(`Socket ${socket.id} (${user?.email}) joined room ${roomId}`);
+
+      // Broadcast updated participant list
+      broadcastParticipants(roomId);
     });
 
     // Handle Chat Message
@@ -43,9 +58,43 @@ export function initSocket(httpServer: HttpServer) {
       }
     });
 
+    // Player Actions (Sync)
+    socket.on("player_action", (data: { roomId: string, type: string, time: number }) => {
+        // Broadcast to everyone else in the room
+        socket.to(data.roomId).emit("player_action", data);
+    });
+
+    // Change Anime
+    socket.on("change_anime", (data: { roomId: string, anime: any, episodeId: string }) => {
+        io.to(data.roomId).emit("change_anime", data);
+    });
+
     socket.on("disconnect", () => {
       console.log(`Socket disconnected: ${socket.id}`);
+      const userData = connectedUsers.get(socket.id);
+      if (userData) {
+          connectedUsers.delete(socket.id);
+          broadcastParticipants(userData.roomId);
+      }
     });
+
+    function broadcastParticipants(roomId: string) {
+        // Get all sockets in the room
+        const roomSockets = io.sockets.adapter.rooms.get(roomId);
+        const participants: any[] = [];
+        
+        if (roomSockets) {
+            for (const socketId of roomSockets) {
+                const info = connectedUsers.get(socketId);
+                if (info) {
+                    participants.push(info.user);
+                }
+            }
+        }
+        
+        // Remove duplicates if same user joined multiple times? For now just send list.
+        io.to(roomId).emit("update_participants", participants);
+    }
   });
 
   return io;
